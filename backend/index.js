@@ -1,7 +1,42 @@
+'use strict';
+const express = require('express');
+const cors = require('cors');
+const config = require('./config');
+const bodyParser = require('body-parser');
+const productRoutes =require('./routes/ProductRouter');
+
+
+const app = express ();
+
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.json());
+
+app.use('/api',productRoutes.routes)
+
+app.get('/',(req,res) => {
+  res.send('hello boss server is runing');
+});
+
+/*
+  //Port
+  const port = process.env.PORT || 3000 ;
+  const base_url = `http://localhost:${port}`
+*/
+  app.listen(config.port, () => {
+    console.log('listening port on',config.url);
+    });
+
+
+
+
+
+
+
+/*  API PRODUCTS
 
 const Joi = require('joi');
-const express = require('express');
-const app = express ();
 
 const products = [
   { id: 1, name: 'Souris' },
@@ -10,32 +45,11 @@ const products = [
 ]
 
 
-app.use(express.json());
-
-
-
-app.get('/',(req,res) => {
-  res.send('hello bechir makni');
-});
-
-
-  //Port
-  const port = process.env.PORT || 3000 ;
-  const base_url = `http://localhost:${port}`
-  app.listen(port, () => {
-    console.log('listenin port on',base_url);
-    });
-
-
-
-
-
 app.get('/api/products',(req,res) => {
 
     res.send(products);
 
     });
-
 
 app.get('/api/products/:id', (req, res) =>{
 
@@ -105,5 +119,4 @@ app.delete('/api/products/:id', (req,res) => {
   res.send(product);
 
 })
-
-
+*/
