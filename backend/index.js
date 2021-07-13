@@ -1,10 +1,10 @@
-'use strict';
+const config = require('./config')
+const dotenv = require ('dotenv')
 const express = require('express');
 const cors = require('cors');
-const config = require('./config');
 const bodyParser = require('body-parser');
 const productRoutes =require('./routes/ProductRouter');
-
+const UserRoutes = require('./routes/UserRouter');
 
 const app = express ();
 
@@ -13,10 +13,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.use('/api',productRoutes.routes)
+
+dotenv.config();
+
+
+app.use('/api',productRoutes.routes);
+app.use('/api',UserRoutes.routes);
+
+
 
 app.get('/',(req,res) => {
-  res.send('hello boss server is runing');
+  res.send('hello boss server is running');
 });
 
 /*
@@ -24,8 +31,10 @@ app.get('/',(req,res) => {
   const port = process.env.PORT || 3000 ;
   const base_url = `http://localhost:${port}`
 */
+
+
   app.listen(config.port, () => {
-    console.log('listening port on',config.url);
+    console.log(`listening port on http://localhost:`+config.port);
     });
 
 

@@ -1,20 +1,21 @@
-
-'use strict';
-
-const firebase = require('../db');
 const Product = require('../models/product');
+const multer = require('multer');
+const firebase = require('../db');
 const firestore = firebase.firestore();
 
 
-const addProduct = async (req,res, next) => {
+const addProduct  = async(req,res, next)  => {
   try {
-    const data = req.body;
-    await firestore.collection('products').doc().set(data);
-    res.send('Product saved successfuly');
+   const data = req.body;
+   await firestore.collection('products').doc().set(data);
+   res.send('Product saved successfuly');
+
   }catch(error){
     res.status(400).send(error.message);
   }
-}
+
+};
+
 
 const getAllProduct = async(req,res,next) => {
   try{
@@ -23,15 +24,14 @@ const getAllProduct = async(req,res,next) => {
     const data = await products.get();
     const productsArray = [];
 
-
     if(data.empty){
       res.status(400).send("no products found");
     }else {
-      data.forEach(doc => {
-        const product = new Product(
+      data.forEach(doc => { const product = new Product(
           doc.id,
           doc.data().name,
           doc.data().category,
+          doc.data().prix,
           doc.data().brand,
           doc.data().quantite
         );
